@@ -889,5 +889,74 @@ document.querySelectorAll('.nav-item').forEach(el=>{
   });
 });
 </script>
+
+<script type="application/json" id="kbs-chat-config">
+{
+  "apiKey": "AIzaSyC3b4tUiVL_iJD23ypGd1LU1rjkCnBLtps",
+  "authDomain": "paijit-67843.firebaseapp.com",
+  "databaseURL": "https://paijit-67843-default-rtdb.firebaseio.com",
+  "projectId": "paijit-67843",
+  "appId": "1:1072108622607:web:b87b1bdca3d7cd085be47a"
+}
+</script>
+<style>
+#kbs-chat-launch{position:fixed;right:24px;bottom:24px;z-index:10000;background:#1655d6;color:white;border:0;border-radius:28px;padding:15px 22px;box-shadow:0 6px 24px #164ba34d;cursor:pointer;font:600 16px sans-serif}
+#kbs-chat-panel{position:fixed;right:24px;bottom:90px;z-index:10001;width:390px;max-width:calc(100vw - 24px);height:570px;max-height:calc(100dvh - 110px);background:white;border:1px solid #dbe4f3;border-radius:20px;box-shadow:0 16px 60px #15376640;overflow:hidden;color:#183153;font:14px/1.6 sans-serif;display:flex;flex-direction:column}
+#kbs-chat-panel[hidden],#kbs-chat-panel [hidden]{display:none!important}
+#kbs-chat-panel *{box-sizing:border-box}#kbs-chat-panel header{background:linear-gradient(110deg,#194bce,#2aaee8);color:white;padding:16px;display:flex;justify-content:space-between;align-items:center}#kbs-chat-panel h2{font-size:18px;margin:0}#kbs-chat-panel button{cursor:pointer;border:0;border-radius:9px;padding:9px 12px;font:inherit;background:#edf3ff;color:#164bb1}#kbs-chat-panel button:disabled{opacity:.5;cursor:not-allowed}#kbs-chat-status{padding:8px 16px;background:#f1f6ff;font-size:12px}#kbs-chat-panel input,#kbs-chat-panel textarea{width:100%;padding:10px;border:1px solid #cbd8ec;border-radius:9px;font:inherit;background:white;color:#183153}#kbs-chat-login{padding:16px;overflow:auto}#kbs-chat-login label{display:block;margin-bottom:12px}#kbs-chat-panel .kbs-primary{background:#1655d6;color:white}#kbs-chat-messages{flex:1;overflow:auto;padding:14px;background:#f7f9fe;min-height:80px}.kbs-msg{padding:10px 12px;margin:0 25px 10px 0;background:#fff;border:1px solid #e1e9f5;border-radius:12px;overflow-wrap:anywhere}.kbs-msg.mine{margin:0 0 10px 25px;background:#e5efff}.kbs-msg small{display:block;color:#5a7094;font-size:11px}.kbs-msg p{margin:4px 0;white-space:pre-wrap}#kbs-chat-compose{padding:12px;border-top:1px solid #e5eaf4;display:flex;gap:8px}#kbs-chat-compose textarea{resize:none}#kbs-chat-account{padding:6px 14px;display:flex;align-items:center;justify-content:space-between;font-size:12px}#kbs-chat-help{padding:16px;overflow:auto}#kbs-chat-help pre{font-size:11px;white-space:pre-wrap;background:#eef3fa;padding:9px;overflow-wrap:anywhere}#kbs-chat-help li{margin-bottom:10px}#kbs-chat-error{margin:0;padding:6px 14px;color:#a52828;font-size:12px}#kbs-chat-badge{background:#ffcb55;color:#183153;border-radius:20px;padding:2px 7px} @media(max-width:480px){#kbs-chat-panel{right:12px;bottom:80px}#kbs-chat-launch{right:12px;bottom:16px}}
+</style>
+<button id="kbs-chat-launch" aria-expanded="false" aria-controls="kbs-chat-panel">💬 แชทแผนก <span id="kbs-chat-badge" hidden>0</span></button>
+<section id="kbs-chat-panel" aria-label="แชทแผนก KBS" hidden>
+<header><div><h2>💬 แชทแผนก</h2><small>KBS · ห้องสนทนารวม</small></div><div><button id="kbs-chat-help-btn" aria-label="คู่มือตั้งค่า">?</button> <button id="kbs-chat-close" aria-label="ปิดแชท">✕</button></div></header>
+<div id="kbs-chat-status" role="status">ยังไม่ได้เชื่อมต่อ Firebase</div><p id="kbs-chat-error" role="alert"></p>
+<div id="kbs-chat-help" hidden><strong>คู่มือเปิดใช้งานแชท</strong><ol>
+<li>เข้า <a href="https://console.firebase.google.com/" target="_blank" rel="noopener">Firebase Console</a> สร้างโปรเจกต์ แล้วเพิ่มแอป Web (&lt;/&gt;) ไม่ต้องเปิด Firebase Hosting</li>
+<li>สร้าง Realtime Database ในโหมด Locked แล้วคัดลอก databaseURL เปิด Authentication → Sign-in method → Email/Password</li>
+<li>ใน Project settings → Your apps คัดลอกค่าจาก firebaseConfig มาใส่ JSON ในไฟล์ HTML ตรง <b>kbs-chat-config</b> (apiKey, authDomain, databaseURL, projectId, appId) ต้องใช้เครื่องหมายคำพูดคู่ JSON และไม่ใส่ const หรือเครื่องหมาย ;</li>
+<li>Authentication → Settings → Authorized domains เพิ่มโดเมน GitHub Pages เช่น pjaomsins-stack.github.io (ไม่มี https หรือเส้นทาง)</li>
+<li>Authentication → Users → Add user สร้างบัญชีพนักงานแต่ละคน แล้วคัดลอก UID ของแต่ละบัญชี</li>
+<li>Realtime Database → Data เพิ่ม <code>chatMembers/UID/name</code> เป็นชื่อพนักงาน เช่น “ออมสิน” เปลี่ยน UID ให้ตรงกับบัญชีจริง ต้องเพิ่มสมาชิกก่อนจึงอ่านหรือส่งข้อความได้ รหัสผ่านเก็บใน Authentication เท่านั้น</li>
+<li>Realtime Database → Rules วางกฎด้านล่างแล้ว Publish (หากมีข้อมูลระบบอื่นอยู่แล้ว ให้รวมกฎอย่างระมัดระวัง)</li></ol><pre id="kbs-chat-rules"></pre>
+<p>บันทึกไฟล์เป็น <b>index.html</b> แล้วอัปโหลดแทนไฟล์เดิมใน GitHub เว็บแชทแสดง 100 ข้อความล่าสุด โดยข้อความเก่ายังอยู่ในฐานข้อมูล</p><p>ทดสอบเปิดเว็บจากสองเครื่อง ล็อกอินคนละบัญชี แล้วส่งข้อความไป–กลับ ทดสอบบัญชีที่ไม่มีใน chatMembers ว่าเข้าไม่ได้ด้วย</p><p>การลบสมาชิกออกจาก chatMembers จะตัดสิทธิ์แชท หน้าเว็บและรายงานเดิมยังใช้สิทธิ์แบบเดิม กฎนี้ป้องกันเฉพาะข้อมูลแชท ควรติดตามปริมาณใช้งานและโควตาใน Firebase</p>
+<a href="https://firebase.google.com/docs/database/security/rules-conditions" target="_blank" rel="noopener">เอกสารสิทธิ์ฐานข้อมูล</a> · <a href="https://firebase.google.com/docs/auth/web/password-auth" target="_blank" rel="noopener">เอกสารการเข้าสู่ระบบ</a></div>
+<form id="kbs-chat-login"><p>เข้าสู่ระบบด้วยบัญชีที่ผู้ดูแลจัดให้</p><label>อีเมล<input id="kbs-chat-email" type="email" autocomplete="username" required></label><label>รหัสผ่าน<input id="kbs-chat-password" type="password" autocomplete="current-password" required></label><button class="kbs-primary" id="kbs-chat-signin" disabled>เข้าสู่ระบบ</button><p>ยังไม่ได้ตั้งค่า? กดปุ่ม <b>?</b> ด้านบนเพื่อดูวิธีเชื่อมต่อ</p></form>
+<div id="kbs-chat-account" hidden><span id="kbs-chat-who"></span><button id="kbs-chat-signout">ออกจากระบบ</button></div>
+<div id="kbs-chat-messages" role="log" aria-label="ข้อความสนทนา" hidden></div>
+<form id="kbs-chat-compose" hidden><textarea id="kbs-chat-text" rows="2" maxlength="2000" placeholder="พิมพ์ข้อความ…" aria-label="ข้อความ" required></textarea><button class="kbs-primary" id="kbs-chat-send" disabled>ส่ง</button></form>
+</section>
+<script>
+(async function(){
+ const el=id=>document.getElementById('kbs-chat-'+id), panel=el('panel');
+ let help=false, user=null, member=null, connected=false, ready=false, busy=false, unread=0, stopMessages=null, stopMember=null, known=new Set(), initial=true;
+ const rules={rules:{'.read':false,'.write':false,chatMembers:{'$uid':{'.read':'auth != null && auth.uid === $uid','.write':false}},chatMessages:{'.read':"auth != null && root.child('chatMembers').child(auth.uid).child('name').isString() && query.orderByChild === 'createdAt' && query.limitToLast <= 100",'.indexOn':['createdAt'],'$id':{'.write':"auth != null && root.child('chatMembers').child(auth.uid).child('name').isString() && !data.exists() && newData.exists()",'.validate':"newData.hasChildren(['uid','name','text','createdAt'])",uid:{'.validate':'newData.isString() && newData.val() === auth.uid'},name:{'.validate':"newData.isString() && newData.val() === root.child('chatMembers').child(auth.uid).child('name').val()"},text:{'.validate':'newData.isString() && newData.val().length > 0 && newData.val().length <= 2000'},createdAt:{'.validate':'newData.isNumber() && newData.val() === now'},'$other':{'.validate':false}}}}};
+ el('rules').textContent=JSON.stringify(rules,null,2);
+ function clearUnread(){unread=0;el('badge').hidden=true;}
+ function view(){el('help').hidden=!help;el('login').hidden=help||!!user;el('account').hidden=help||!user;el('messages').hidden=help||!member;el('compose').hidden=help||!member;el('send').disabled=!connected||!member||busy;}
+ function open(v){panel.hidden=!v;el('launch').setAttribute('aria-expanded',String(v));if(v){clearUnread();el('close').focus();}else el('launch').focus();}
+ el('launch').onclick=()=>open(panel.hidden);el('close').onclick=()=>open(false);el('help-btn').onclick=()=>{help=!help;view();};panel.addEventListener('keydown',e=>{if(e.key==='Escape')open(false);});
+ const err=t=>el('error').textContent=t;
+ const config=JSON.parse(document.getElementById('kbs-chat-config').textContent);
+ if(!['apiKey','authDomain','databaseURL','projectId','appId'].every(k=>config[k])){el('status').textContent='รอตั้งค่า Firebase · กด ? เพื่อดูคู่มือ';return;}
+ try{
+ const base='https://www.gstatic.com/firebasejs/12.0.0/';
+ const [appSDK,authSDK,dbSDK]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-database.js')]);
+ const app=appSDK.initializeApp(config,'kbs-chat'),auth=authSDK.getAuth(app),db=dbSDK.getDatabase(app);
+ await authSDK.setPersistence(auth,authSDK.browserSessionPersistence);
+ ready=true;el('signin').disabled=false;
+ function status(){el('status').textContent=!connected?'กำลังเชื่อมต่อ · ยังส่งข้อความไม่ได้':!user?'พร้อมใช้งาน · กรุณาเข้าสู่ระบบ':!member?'บัญชีนี้ยังไม่ได้รับสิทธิ์แชท':'เชื่อมต่อแล้ว · ห้องรวม · 100 ข้อความล่าสุด';view();}
+ dbSDK.onValue(dbSDK.ref(db,'.info/connected'),snap=>{connected=snap.val()===true;status();});
+ el('login').onsubmit=async e=>{e.preventDefault();if(!ready)return;err('');el('signin').disabled=true;try{await authSDK.signInWithEmailAndPassword(auth,el('email').value.trim(),el('password').value);el('password').value='';}catch(e){err(e.code==='auth/too-many-requests'?'ลองหลายครั้งเกินไป กรุณารอสักครู่':'เข้าสู่ระบบไม่สำเร็จ ตรวจอีเมล รหัสผ่าน และการเชื่อมต่อ');}finally{el('signin').disabled=false;}};
+ el('signout').onclick=async()=>{try{await authSDK.signOut(auth);}catch(e){err('ออกจากระบบไม่สำเร็จ กรุณาลองอีกครั้ง');}};
+ function resetMessages(){if(stopMessages)stopMessages();stopMessages=null;el('messages').replaceChildren();known=new Set();initial=true;clearUnread();}
+ authSDK.onAuthStateChanged(auth,u=>{if(stopMember)stopMember();stopMember=null;resetMessages();user=u;member=null;err('');el('text').value='';el('who').textContent=u?'กำลังตรวจสิทธิ์…':'';status();if(!u)return;
+ stopMember=dbSDK.onValue(dbSDK.ref(db,'chatMembers/'+u.uid),snap=>{member=snap.val();if(!member||typeof member.name!=='string'){member=null;resetMessages();el('who').textContent='ยังไม่ได้รับสิทธิ์';status();return;}el('who').textContent=member.name;status();if(stopMessages)return;
+ const q=dbSDK.query(dbSDK.ref(db,'chatMessages'),dbSDK.orderByChild('createdAt'),dbSDK.limitToLast(100));
+ stopMessages=dbSDK.onValue(q,s=>{const box=el('messages'),nearBottom=box.scrollHeight-box.scrollTop-box.clientHeight<70;const frag=document.createDocumentFragment();let added=0;const next=new Set();s.forEach(child=>{const m=child.val();next.add(child.key);if(!initial&&!known.has(child.key)&&m.uid!==user.uid)added++;const article=document.createElement('article');article.className='kbs-msg'+(m.uid===user.uid?' mine':'');const meta=document.createElement('small'),body=document.createElement('p');meta.textContent=m.name+' · '+(typeof m.createdAt==='number'?new Date(m.createdAt).toLocaleString('th-TH',{dateStyle:'short',timeStyle:'short'}):'กำลังส่ง');body.textContent=m.text;article.append(meta,body);frag.append(article);});box.replaceChildren(frag);if(!s.exists())box.textContent='ยังไม่มีข้อความ เริ่มสนทนาได้เลยค่ะ';if(initial||nearBottom)box.scrollTop=box.scrollHeight;known=next;initial=false;if(panel.hidden||help){unread+=added;el('badge').textContent=String(unread);el('badge').hidden=unread===0;}},()=>{member=null;resetMessages();status();err('อ่านแชทไม่ได้ ตรวจสิทธิ์สมาชิกและ Database Rules');});
+ },()=>{member=null;resetMessages();status();err('ตรวจสิทธิ์ไม่ได้ กรุณาติดต่อผู้ดูแล');});});
+ el('compose').onsubmit=async e=>{e.preventDefault();const text=el('text').value.trim();if(!text||!user||!member||!connected||busy)return;busy=true;view();err('');const draft=el('text').value;try{await dbSDK.set(dbSDK.push(dbSDK.ref(db,'chatMessages')),{uid:user.uid,name:member.name,text,createdAt:dbSDK.serverTimestamp()});if(el('text').value===draft)el('text').value='';el('messages').scrollTop=el('messages').scrollHeight;}catch(e){err('ส่งไม่สำเร็จ ข้อความยังอยู่ในช่องพิมพ์ ตรวจสิทธิ์และการเชื่อมต่อ');}finally{busy=false;view();}};
+ }catch(e){el('status').textContent='เชื่อมต่อ Firebase ไม่สำเร็จ';err('ตรวจค่าตั้งค่าและอินเทอร์เน็ต แล้วรีโหลดหน้าเว็บ');}
+})();
+</script>
+
 </body>
 </html>
